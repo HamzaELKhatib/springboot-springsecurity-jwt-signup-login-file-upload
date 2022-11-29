@@ -26,6 +26,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 // We're permitting all post requests to the path "/users"
                 .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
                 // We're requiring all other requests to be authenticated
                 .anyRequest().authenticated()
                  /*
