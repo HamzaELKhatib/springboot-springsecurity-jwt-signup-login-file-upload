@@ -1,0 +1,11 @@
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        password: ''
+        url: jdbc:mysql://localhost:3306/rest?useSSL=false&allowMultiQueries=true&serverTimezone=UTC
+        username: root
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+tokenSecret: jh5gt6dc5g41b9ju3s47
