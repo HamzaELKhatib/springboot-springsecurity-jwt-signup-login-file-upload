@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, userEntity);
 
         // Populating the required fields that aren't put in by the user
-        userEntity.setUserId(utils.generateUserId(10));
+        userEntity.setUserId(utils.generateId(10));
 
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 

@@ -9,10 +9,18 @@ import java.util.Random;
 public class Utils {
 
     private final Random RANDOM = new SecureRandom();
+
+    Random ran = new Random();
     private final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    public String generateUserId(int length) {
+    public String generateId(int length) {
         return generateRandomString(length);
+    }
+    public String generateRandomValues(int length) {
+        return generateRandomString(length);
+    }
+    public String generateRandomInt() {
+        return String.valueOf(ran.nextInt(201) + 5);
     }
 
     private String generateRandomString(int length) {
