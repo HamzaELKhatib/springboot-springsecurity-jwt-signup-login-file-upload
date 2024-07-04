@@ -1,12 +1,11 @@
-package com.rest.presentationlayer.model.response;
+package com.rest.presentationlayer.model.response
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Getter
+import lombok.Setter
 
 @Getter
 @Setter
-public class OperationStatusModel {
-
-    private String operationResult;
-    private String operationName;
+class OperationStatusModel {
+    var operationResult: String? = null
+    var operationName: String? = null
 }

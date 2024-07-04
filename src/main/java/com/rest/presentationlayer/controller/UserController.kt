@@ -1,111 +1,90 @@
-package com.rest.presentationlayer.controller;
+package com.rest.presentationlayer.controller
 
-import com.rest.exceptions.UserServiceException;
-import com.rest.presentationlayer.model.request.UserDetailsRequestModel;
-import com.rest.presentationlayer.model.response.*;
-import com.rest.service.UserService;
-import com.rest.shared.dto.UserDto;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.rest.exceptions.UserServiceException
+import com.rest.presentationlayer.model.request.UserDetailsRequestModel
+import com.rest.presentationlayer.model.response.*
+import com.rest.service.UserService
+import com.rest.shared.dto.UserDto
+import org.springframework.beans.BeanUtils
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("users") // http://localhost:8080/users
-public class UserController {
-
+@RequestMapping("users")
+class UserController {
     @Autowired
-    UserService userService;
+    var userService: UserService? = null
 
-    //Front requesting from backend
-    // "produces" manages the response type
-    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    // http://localhost:8080/users/{id}
-    public UserRest getUser(@PathVariable String id) {
+    @GetMapping(path = ["/{id}"], produces = [MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE])
+    fun getUser(@PathVariable id: String?): UserRest {
+        val returnValue = UserRest()
 
-        UserRest returnValue = new UserRest();
+        val userDto = userService?.getUserByUserId(id) ?: throw UserServiceException("User service is not initialized")
 
-        UserDto userDto = userService.getUserByUserId(id);
+        BeanUtils.copyProperties(userDto, returnValue)
 
-        BeanUtils.copyProperties(userDto, returnValue);
-
-        return returnValue;
+        return returnValue
     }
 
-    // @RequestBody allows createUser to read the body from the http request and convert that body to a java object
-    // UserDetailsRequestModel is the class we're using to create a java object out of this body
-    // UserDetailsRequestModel will have fields that match the request body
-    // UserRest will be used a response model class
-    //sending to the backend
-    // "consumes" manages the request type, produces manages the response type
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+    @PostMapping(
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+    )
+    fun createUser(@RequestBody userDetails: UserDetailsRequestModel): UserRest {
+        val returnValue = UserRest()
 
-        // The information to be returned
-        UserRest returnValue = new UserRest();
+        val isFirstNameEmpty = userDetails.firstName?.isEmpty() ?: true
 
-        // Custom exception to be thrown if the first name is not provided
-        if (userDetails.getFirstName().isEmpty())
-            throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        if (isFirstNameEmpty) throw UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.errorMessage)
 
 
-        UserDto userDto = new UserDto();
+        val userDto = UserDto()
 
-        // Populating the dto with information received from the request body
-        BeanUtils.copyProperties(userDetails, userDto);
+        BeanUtils.copyProperties(userDetails, userDto)
 
-        // Creating a new dto (createdUser) for the response and applying createUser method from userService to it
-        // createUser is a method for creating elements that will be used to fill up the fields in the response(UserRest)
-        UserDto createdUser = userService.createUser(userDto);
+        val createdUser = userService?.createUser(userDto) ?: throw UserServiceException("User service is not initialized")
 
-        // Populating returnValue with information from the createdUser Dto
-        BeanUtils.copyProperties(createdUser, returnValue);
+        BeanUtils.copyProperties(createdUser, returnValue)
 
 
-        return returnValue;
+        return returnValue
     }
 
-    @PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    //sending/updating
-    public UserRest updateUser(@RequestBody UserDetailsRequestModel userDetails, @PathVariable String id) {
+    @PutMapping(
+        path = ["/{id}"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+    )
+    fun updateUser(@RequestBody userDetails: UserDetailsRequestModel, @PathVariable id: String?): UserRest {
+        val returnValue = UserRest()
 
-        // The information to be returned
-        UserRest returnValue = new UserRest();
+        val isFirstNameEmpty = userDetails.firstName?.isEmpty() ?: true
 
-        // Custom exception to be thrown if the first name is not provided
-        if (userDetails.getFirstName().isEmpty())
-            throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        if (isFirstNameEmpty) {
+            throw UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.errorMessage)
+        }
 
+        val userDto = UserDto()
 
-        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails, userDto)
 
-        // Populating the dto with information received from the request body
-        BeanUtils.copyProperties(userDetails, userDto);
+        val updateUser = userService?.updateUser(id, userDto) ?: throw UserServiceException("User service is not initialized")
 
-        // Creating a new dto (createdUser) for the response and applying createUser method from userService to it
-        // createUser is a method for creating elements that will be used to fill up the fields in the response(UserRest)
-        UserDto updateUser = userService.updateUser(id, userDto);
+        BeanUtils.copyProperties(updateUser, returnValue)
 
-        // Populating returnValue with information from the createdUser Dto
-        BeanUtils.copyProperties(updateUser, returnValue);
-
-
-        return returnValue;
+        return returnValue
     }
 
-    @DeleteMapping(path = "/{id}") //delete
-    public OperationStatusModel deleteUser(@PathVariable String id) {
+    @DeleteMapping(path = ["/{id}"])
+    fun deleteUser(@PathVariable id: String?): OperationStatusModel {
+        val returnValue = OperationStatusModel()
 
-        OperationStatusModel returnValue = new OperationStatusModel();
+        userService?.deleteUser(id) ?: throw UserServiceException("User service is not initialized")
 
-        userService.deleteUser(id);
+        returnValue.operationName = RequestOperationName.DELETE.name
+        returnValue.operationResult = RequestOperationStatus.SUCCESS.name
 
-        returnValue.setOperationName(RequestOperationName.DELETE.name());
-        returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
-
-        return returnValue;
+        return returnValue
     }
 }

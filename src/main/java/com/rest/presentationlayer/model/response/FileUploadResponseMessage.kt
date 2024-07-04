@@ -1,13 +1,12 @@
-package com.rest.presentationlayer.model.response;
+package com.rest.presentationlayer.model.response
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor
+import lombok.Getter
+import lombok.Setter
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class FileUploadResponseMessage {
-
-    private String message;
+class FileUploadResponseMessage {
+    var message: String? = null
 }

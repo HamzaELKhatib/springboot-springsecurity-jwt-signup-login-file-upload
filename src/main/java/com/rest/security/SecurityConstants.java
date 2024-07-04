@@ -11,7 +11,6 @@ public class SecurityConstants {
 
     public static String getTokenSecret() {
 
-        // We can't Autowire the AppProperties bean, so we need to get it from the SpringApplicationContext
         AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("appProperties");
         return appProperties.getTokenSecret();
     }

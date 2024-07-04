@@ -16,7 +16,6 @@ public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    //Fields in the UserEntity should be the same as the fields in UserDto
     @Id
     @GeneratedValue
     private long id;
