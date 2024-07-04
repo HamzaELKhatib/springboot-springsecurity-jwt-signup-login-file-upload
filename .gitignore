@@ -6,3 +6,15 @@ rest.iml
 *.war
 *.class
 target/
+out/
+.idea/
+*.log
+*.iws
+*.swp
+*.bak
+*.orig
+*.tmp
+*.tmp.*
+*.*.tmp
+*.*.swp
+.pb
