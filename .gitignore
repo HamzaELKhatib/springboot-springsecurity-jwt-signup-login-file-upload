@@ -20,4 +20,4 @@ idea\
 *.idea.*
 *.*.tmp
 *.*.swp
-.pb
+*.pb
