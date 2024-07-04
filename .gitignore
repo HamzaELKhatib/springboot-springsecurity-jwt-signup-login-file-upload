@@ -9,6 +9,7 @@ target/
 out/
 .idea/
 idea/
+idea\
 *.log
 *.iws
 *.swp
@@ -16,6 +17,7 @@ idea/
 *.orig
 *.tmp
 *.tmp.*
+*.idea.*
 *.*.tmp
 *.*.swp
 .pb
