@@ -8,6 +8,7 @@ rest.iml
 target/
 out/
 .idea/
+idea/
 *.log
 *.iws
 *.swp
