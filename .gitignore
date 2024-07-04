@@ -21,3 +21,4 @@ idea\
 *.*.tmp
 *.*.swp
 *.pb
+/.idea/
