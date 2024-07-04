@@ -1,2 +1,7 @@
 .idea
 rest.iml
+*.iml
+*.ipr
+*.jar
+*.war
+*.class
