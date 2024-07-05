@@ -42,25 +42,18 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = new UserEntity();
 
-        // Populating userEntity with info from dto
         BeanUtils.copyProperties(user, userEntity);
 
-        // Populating the required fields that aren't put in by the user
         userEntity.setUserId(utils.generateId(10));
 
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        // saving info from userEntity to the database using the repo
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
-        // return:
-        // creating a dto to return
         UserDto returnValue = new UserDto();
 
-        // Population the return dto from the entity
         BeanUtils.copyProperties(storedUserDetails, returnValue);
 
-        // Returning the dto
         return returnValue;
 
     }
