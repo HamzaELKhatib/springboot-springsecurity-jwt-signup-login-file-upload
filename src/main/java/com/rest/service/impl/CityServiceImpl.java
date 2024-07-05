@@ -32,7 +32,7 @@ public class CityServiceImpl implements CityService {
 
     @PostConstruct
     public void init() {
-        try{
+        try {
             BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
             String line;
             while ((line = br.readLine()) != null) {
@@ -47,7 +47,7 @@ public class CityServiceImpl implements CityService {
                 cities.add(cityObj);
             }
             LOGGER.info("Cities loaded: " + cities.size());
-        }catch (IOException e){
+        } catch (IOException e) {
             LOGGER.info("Error while reading file: " + e.getMessage());
         }
     }

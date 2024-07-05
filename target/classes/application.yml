@@ -1,12 +1,17 @@
+server:
+    port: 8080
 spring:
     datasource:
-        driverClassName: com.mysql.cj.jdbc.Driver
-        password: ''
-        url: jdbc:mysql://localhost:3306/indatacore_db?useSSL=false&allowMultiQueries=true&serverTimezone=UTC
-        username: root
+        password: password
+        url: jdbc:postgresql://localhost:5432/awholelottadata_db?useSSL=false&allowMultiQueries=true&serverTimezone=UTC
+        username: helk
     jpa:
         hibernate:
             ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
         show-sql: true
     servlet:
       multipart:

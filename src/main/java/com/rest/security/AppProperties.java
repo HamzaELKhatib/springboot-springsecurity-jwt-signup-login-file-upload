@@ -12,7 +12,6 @@ public class AppProperties {
 
 public String getTokenSecret() {
 
-    // Reading from the application.properties file
         return environment.getProperty("tokenSecret");
     }
 }
